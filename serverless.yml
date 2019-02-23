@@ -1,0 +1,17 @@
+service: payroll-java-example
+
+provider:
+  name: aws
+  runtime: java8
+  region: us-west-2
+
+package:
+  artifact: target/hello-dev.jar
+
+functions:
+  hello:
+    handler: com.serverless.Handler
+    events:
+      - http:
+          path: /
+          method: get
