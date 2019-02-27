@@ -9,8 +9,8 @@ package:
   artifact: target/hello-dev.jar
 
 functions:
-  hello:
-    handler: com.serverless.Handler
+  payroll-controller:
+    handler: com.serverless.PayrollController
     events:
       - http:
           path: /
