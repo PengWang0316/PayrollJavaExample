@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Payroll</title>
+</head>
+<body>
+  
+  <div>
+    <form>
+      <div>Working Hours:</div>
+      <div><input id="workingHours" name="workingHours" type="number" /></div>
+      <div>Pay Rate:</div>
+      <div><input id="payRate" name="payRate" type="number" /></div>
+      <div><button type="button" onclick="calculate()">Calculate</button></div>
+    </form>
+    <h4>Your gross pay is $ <span id="result"></span></h4>
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    function calculate() {console.log('hi');
+      axios.get('https://5h7tff8c6l.execute-api.us-west-2.amazonaws.com/dev/', {
+        params: {
+          payRate: document.getElementById('payRate').value,
+          workingHours: document.getElementById('workingHours').value,
+        },
+      }).then(result => document.getElementById('result').innerText = result.data.message);
+    }
+  </script>
+</body>
+</html>
