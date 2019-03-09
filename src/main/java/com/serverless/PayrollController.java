@@ -2,6 +2,7 @@ package com.serverless;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,12 +26,18 @@ public class PayrollController implements RequestHandler<Map<String, Object>, Ap
 		else {
       Payroll myPayroll = new Payroll(Integer.parseInt((String)queryMap.get(WORKING_HOURS_TEXT)), Double.parseDouble((String)queryMap.get(PAY_RATE_TEXT)));
       double grossPay = myPayroll.calculateGrossPay();
-      responseBody = new Response("Your gross pay is $" + grossPay , null);
-    }
+      responseBody = new Response(Double.toString(grossPay) , null);
+		}
+		
+		Map<String, String> headersMap = new HashMap<>();
+		headersMap.put("X-Powered-By", "AWS Lambda & serverless");
+		headersMap.put("Access-Control-Allow-Origin", "*");
+		headersMap.put("Access-Control-Allow-Credentials", "true");
+
 		return ApiGatewayResponse.builder()
 				.setStatusCode(200)
 				.setObjectBody(responseBody)
-				.setHeaders(Collections.singletonMap("X-Powered-By", "AWS Lambda & serverless"))
+				.setHeaders(headersMap)
 				.build();
 	}
 
